@@ -55,10 +55,14 @@ class Diarizer:
         self.period = period
 
     def setup_VAD(self):
-        model, utils = torch.hub.load(
-            repo_or_dir="snakers4/silero-vad", model="silero_vad"
-        )
-        # force_reload=True)
+        try:
+            model, utils = torch.hub.load(
+                repo_or_dir="snakers4/silero-vad", model="silero_vad"
+            )
+        except:
+            model, utils = torch.hub.load(
+                repo_or_dir="snakers4/silero-vad", model="silero_vad", force_reload=True
+            )
 
         get_speech_ts = utils[0]
         return model, get_speech_ts
